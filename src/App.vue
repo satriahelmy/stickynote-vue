@@ -4,6 +4,7 @@ import { ref } from 'vue';
 const showForm = ref(false);
 const newMemo = ref("");
 const memos = ref([]);
+const errorMessage = ref("");
 
 function addMemo(){
   memos.value.push({
@@ -17,24 +18,26 @@ function addMemo(){
   showForm.value = false;
 }
 
+function deleteMemo(id){
+  memos.value = memos.value.filter(memo => memo.id !== id);
+}
+
 </script>
 
 <template>
   <main>
-    {{memos}}
     <div class="container">
       <header>
         <h1 class="header-title">Memo</h1>
         <button class="header-button" @click="showForm = true">+</button>
       </header>
       <div class="card-container">
-        <div class="card">
-          <p class="card-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae accusamus nobis error ipsam adipisci</p>
-          <p class="card-date">12/12/2023</p>
-        </div>
-        <div class="card">
-          <p class="card-content">Lorem ipsum dolor sit, amet consectetur adipisicing elit. Vitae accusamus nobis error ipsam adipisci</p>
-          <p class="card-date">12/12/2023</p>
+        <div v-for="memo in memos" :key="memo.id" class="card" :style="{ backgroundColor: memo.backgroundColor }">
+          <p class="card-content">{{memo.memo}}</p>
+          <div class="card-footer">
+            <p class="card-date">{{memo.date}}</p>
+            <button @click="deleteMemo(memo.id)" class="card-button">X</button>
+          </div>
         </div>
       </div>
     </div>
@@ -43,7 +46,7 @@ function addMemo(){
         <button @click="showForm = false" class="form-close-btn">
            &times; 
         </button>
-        <textarea v-model="newMemo" name="memo" id="memo" cols="30" rows="10" class="form-textarea" placeholder="Type your memo here..."></textarea>
+        <textarea v-model="newMemo" name="memo" id="memo" cols="30" rows="10" class="form-textarea"></textarea>
         <button @click="addMemo" class="form-save-btn">Save</button>
       </div>
     </div>
@@ -64,6 +67,20 @@ main{
 
 .card-content{
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: white;
+}
+
+.card-date{
+  font-size: 12px;
+  color: white;
+  text-align: right;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.card-footer{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
 header{
@@ -91,6 +108,15 @@ header{
 
 .header-button:hover{
   background-color: #3b4a6b;
+}
+
+.card-button{
+  background-color: #ff4d4d;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 5px 10px;
+  cursor: pointer;
 }
 
 .card-container{
@@ -177,4 +203,11 @@ textarea{
   font-size: 16px;
   resize: none;
 }
+
+.form-error{
+  color: red;
+  margin-bottom: 10px;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 </style>
