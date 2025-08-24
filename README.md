@@ -1,6 +1,6 @@
-# 🗒️ Memo Board — Vue 3 Single-File Component
+# 🗒️ Memo Board — Vue 3
 
-A minimal Vue 3 Single-File Component (SFC) to create, display, and delete colorful memos directly in the browser. Built with the Composition API and `<script setup>` syntax.
+A minimal Vue 3 to create, display, and delete colorful memos directly in the browser. Built with the Composition API and `<script setup>` syntax.
 
 ---
 
